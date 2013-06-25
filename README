@@ -1,9 +1,14 @@
 project is divided into 3 folders ( 1 folder containts only the documentation stuff , development and server contatin the whole project)
 
 Development:
-	contatins all the front game animations
-	all the actions buy/sell and all the asserts (score/coins/wheat .... etc) is save in database using API at this
+	1-	contatins all the front game animations
+	2-	all the actions buy/sell and all the asserts (score/coins/wheat .... etc) is save in database using API at this
 
 Server :
-	server containts all the API. API documentation is given in documentation folder
-	MYSQL data base is used to maintain the state of the game at server side
+	1-	server containts all the API. API documentation is given in documentation folder
+	2-	following dependencies are requied for server to work properley
+		- apache tomcat (you need to configure it i.e. must give path of apache server in your machine)
+		- must load JDBC.jar
+		- you may need to load servlet.JAR (if needed)
+	
+	3-	MYSQL data base is used to maintain the state of the game at server side
