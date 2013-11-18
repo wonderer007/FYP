@@ -1,14 +1,17 @@
-project is divided into 3 folders ( 1 folder containts only the documentation stuff , development and server contatin the whole project)
+project is divided into 2 Documentation and Development folders
 
 Development:
-	1-	contatins all the front game animations
-	2-	all the actions buy/sell and all the asserts (score/coins/wheat .... etc) is save in database using API at this
+	Server	: Backend server of the game. This project can easily be imported in Netbeans
+	DB		: db file used for MYSQL database 
+	Graph	: Graph folder contain ecomic graphs of game. its Adobe Flash project it can be imported very easily in Adobe flash version > 4.6.
+	Utilities: All the depenedencies requied to run the project
+	IES		: IES is the front end of the game its Adobe Flash project it can be imported very easily in Adobe flash version > 4.6
 
-Server :
-	1-	server containts all the API. API documentation is given in documentation folder
-	2-	following dependencies are requied for server to work properley
-		- apache tomcat (you need to configure it i.e. must give path of apache server in your machine)
-		- must load JDBC.jar
-		- you may need to load servlet.JAR (if needed)
-	
-	3-	MYSQL data base is used to maintain the state of the game at server side
+Documentation:
+	it contains all the documentation done in the FYP
+
+NOTE:
+this project is also available on github https://github.com/wonderer007/FYP.git
+For any quries and help please contact at
+gmail : alihaider907@gmail.com
+twitter : @alihaider907
