@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009"
+			   xmlns:s="library://ns.adobe.com/flex/spark"
+			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   width="100%" height="100%" minWidth="2000" minHeight="2000"
+			   creationComplete="initApp()"
+			   mouseMove ="button1_mouseOverHandler(event)" xmlns:local="*"
+			   >
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import components.RenderingSprites;
+			
+			import mx.controls.Alert;
+			import mx.core.UIComponent;
+			
+			private var playerMovement:RenderingSprites= new RenderingSprites(0,0,800,500);
+			private var imagePath:String = "crop1.png";
+			private var state:Number = 2;
+			private var numberOfTiles:Number = 42;							//total number of tiles of farm in the view
+			private var indexNumber:Number;
+			private var diffX:Number=0;
+			private var diffY:Number=0;
+			private var negDiffY:Number =10									//negligable difference on yAxis
+			private var negDiffX:Number = 18;								//negligable difference on xAxis
+			
+																			//0                 //1           //2                 //3                     //4              //5                  //6
+			private var visitedCoordinates:Array = 					[new Point(12,80),   new Point(37,67),   new Point(62,54),   new Point(87,41),   new Point(112,28), new Point(137,15), new Point(162,2),
+																	 new Point(37, 93),  new Point(62,80),   new Point(87,67),   new Point(112,54),  new Point(137,41), new Point(162,28), new Point(187,15),
+																	 new Point(62, 106), new Point(87, 93),  new Point(112, 80), new Point(137,67),  new Point(162, 54),new Point(187, 41),new Point(212, 28),
+																	 new Point(87, 119), new Point(112, 106),new Point(137, 93), new Point(162, 80), new Point(187, 67),new Point(212, 54),new Point(237, 41),
+																	 new Point(112, 132),new Point(137, 119),new Point(162, 106),new Point(187, 93), new Point(212, 80),new Point(237, 67),new Point(262, 54),
+																	 new Point(137, 145),new Point(162, 132),new Point(187, 119),new Point(212, 106),new Point(237, 93),new Point(262, 80),new Point(287, 67)
+																	];
+			private var currVisitedCoor:Array = [];
+			
+			public function initApp():void 
+			{
+				indexNumber = numberOfTiles - 1;
+				
+				var i:Number =0;
+				
+				for(;i < numberOfTiles ; i++){
+					currVisitedCoor.push(new Point(visitedCoordinates[i].x,visitedCoordinates[i].y));
+				}
+				
+				currBgImage.source = imagePath;
+				addElement(playerMovement);	
+				
+			}
+			protected function button1_mouseOverHandler(event:MouseEvent):void
+			{ 
+				if(indexNumber == 0){
+					state = (state+1) % 4 ;
+					indexNumber = numberOfTiles - 1;
+					
+					var j:Number =0;
+					for(;j < numberOfTiles; ++j){
+						currVisitedCoor.push(visitedCoordinates[j].x,visitedCoordinates[j].y);
+					}
+				}
+				
+				if(state == 0){
+					currBgImage.source = "crop1.png";
+				}
+				else if(state == 1){
+					currBgImage.source = "crop2.png";
+				}
+				else if(state == 2){
+					currBgImage.source = "crop3.png";
+				}
+				else{
+					currBgImage.source = "crop4.png";
+				}
+				
+				playerMovement.spriteEventHandler(event.stageX , event.stageY);
+				
+				var tempPoint:Point = playerMovement.getCurrCor();
+				
+				if(tempPoint.x >= visitedCoordinates[0].x && tempPoint.y >= visitedCoordinates[6].y && tempPoint.x <= visitedCoordinates[numberOfTiles-1].x && tempPoint.y <= visitedCoordinates[35].y){
+					
+					var i:Number = indexNumber;
+					var found:Boolean =false;
+					
+					for(; i >= 0 && !found; i--){
+					
+						diffX = tempPoint.x - currVisitedCoor[i].x;
+				
+						if( diffX < 0 ){
+							diffX = diffX * -1;
+						}	
+				
+						diffY = tempPoint.y - currVisitedCoor[i].y;
+				
+						if( diffY < 0 ){
+							diffY = diffY * -1;
+						}
+				
+						if(diffX < negDiffX && diffY < negDiffY){
+							if(i != indexNumber){
+								currVisitedCoor[i].x = currVisitedCoor[indexNumber].x;
+								currVisitedCoor[i].y = currVisitedCoor[indexNumber].y;
+							}
+							indexNumber-- ;
+							found = true;
+						}
+					}
+				}
+			}
+			
+			
+		]]>
+	</fx:Script>
+
+		
+	<s:Image id="currBgImage" width="400" height="300" />
+	
+</s:Application>
